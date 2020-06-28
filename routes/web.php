@@ -22,5 +22,3 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/product/{id}', 'ProductController@show');
-
-//Route::get('/product/', 'ProductController@delete');

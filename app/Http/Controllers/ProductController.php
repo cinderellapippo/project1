@@ -43,15 +43,8 @@ class ProductController extends Controller
     public function add($data)
     {
 
-        /* foramt data
-        $data['name'] ='test2';
-        $data['price'] = '23';
-        $data['mark'] = 'mark2';
-        $data['description'] = '2222sss';
-        $data['image'] = '1.JPG;4.JPG';*/
-
         $res = DB::table('mark')
-            ->where('mark.mark_name',$data['mark'])
+            ->where('mark.mark_name',$data['product_mark'])
             ->get();
         if(!isset($res[0])){
             $mark_id = DB::table('mark')->insertGetId(
@@ -62,7 +55,7 @@ class ProductController extends Controller
         }
 
         $images = array();
-        foreach(explode(';',$data['image']) as $val){
+        foreach(explode(';',$data['product_image']) as $val){
             $resImage = DB::table('image')->where('image_name',$val)->get();
             if(!isset($resImage[0])){
                 $images[] = DB::table('image')->insertGetId(
@@ -74,10 +67,10 @@ class ProductController extends Controller
         }
 
         DB::table('product')->insert([
-            'product_name' => $data['name'],
-            'product_price' => $data['price'],
+            'product_name' => $data['product_name'],
+            'product_price' => $data['product_price'],
             'product_mark' => $mark_id,
-            'product_description' => $data['description'],
+            'product_description' => $data['product_description'],
             'product_image' => implode(';',$images)
         ]);
     }
@@ -86,7 +79,7 @@ class ProductController extends Controller
     {
 
         $res = DB::table('mark')
-            ->where('mark.mark_name',$data['mark'])
+            ->where('mark.mark_name',$data['product_mark'])
             ->get();
         if(!isset($res[0])){
             $mark_id = DB::table('mark')->insertGetId(
@@ -97,7 +90,7 @@ class ProductController extends Controller
         }
 
         $images = array();
-        foreach(explode(';',$data['image']) as $val){
+        foreach(explode(';',$data['product_image']) as $val){
             $resImage = DB::table('image')->where('image_name',$val)->get();
             if(!isset($resImage[0])){
                 $images[] = DB::table('image')->insertGetId(
@@ -111,10 +104,10 @@ class ProductController extends Controller
         DB::table('product')
             ->where('product_id',$data['product_id'])
             ->update([
-                'product_name' => $data['name'],
-                'product_price' => $data['price'],
+                'product_name' => $data['product_name'],
+                'product_price' => $data['product_price'],
                 'product_mark' => $mark_id,
-                'product_description' => $data['description'],
+                'product_description' => $data['product_description'],
                 'product_image' => implode(';',$images)
             ]);
     }
